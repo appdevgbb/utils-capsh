@@ -8,6 +8,7 @@ set -eou pipefail
 POD=${1:-DEFAULTPOD}
 CAPSH_DIR=${HOME}/.config/capsh
 CAPSH_STATIC_BIN=libcap2-2.25-capsh-STATIC
+CAPSH_STATIC_BIN_PATH=/usr/local/bin
 ################################################################################
 
 usage() {
