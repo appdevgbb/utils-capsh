@@ -16,6 +16,7 @@ manualy fetch and install `capsh` you can grab a copy of it from this repo and m
 to `/usr/local/bin`.
 
 ```bash
+CAPSH_STATIC_BIN_PATH=/usr/local/bin
 CAPSH_STATIC_BIN=libcap2-2.25-capsh-STATIC
 curl -LO https://github.com/dcasati/kubectl-capsh/raw/main/bin/${CAPSH_STATIC_BIN}
 chmod +x ${CAPSH_STATIC_BIN}
