@@ -23,10 +23,12 @@ spec:
         - darwin
         - linux
     uri: https://github.com/appdevgbb/utils-capsh/releases/download/v0.1.1/capsh-0.1.1.tar.gz
-    sha256: 4711bc72721a3840cb6eebf521572d112d127e904c625b61d7c7bbdc737f27ad
+    sha256: 592b689b9eb3069530895bd485c313df97184f49ad0777a4b85bd3eaeeb51094
     bin: kubectl-capsh
     files: 
     - from: ./kubectl-capsh
       to: .
     - from: LICENSE
+      to: .
+    - from: bin/libcap2-2.25-capsh-STATIC
       to: .
