@@ -6,9 +6,8 @@
 set -eou pipefail
 ################################################################################
 POD=${1:-DEFAULTPOD}
-CAPSH_DIR=${HOME}/.config/capsh
+CAPSH_DIR=${HOME}/.kube/capsh
 CAPSH_STATIC_BIN=libcap2-2.25-capsh-STATIC
-CAPSH_STATIC_BIN_PATH=/usr/local/bin
 ################################################################################
 
 usage() {
@@ -25,26 +24,19 @@ fetch_capsh() {
     mkdir "${CAPSH_DIR}"
   fi
 
-  mv ${CAPSH_STATIC_BIN} "${CAPSH_DIR}"/${CAPSH_STATIC_BIN} ||
-    echo "can't copy ${CAPSH_STATIC_BIN} to ${CAPSH_STATIC_BIN_PATH}}."
-  echo "please copy the file to that location before proceeding."
+  mv ${CAPSH_STATIC_BIN} ${CAPSH_DIR}
 }
+
+if [ ! -f "${CAPSH_DIR}"/"${CAPSH_STATIC_BIN}" ]; then
+  fetch_capsh
+fi
 
 if [[ -z "${POD+1}"  || "${POD}" == "DEFAULTPOD" ]]; then
   echo "You need to specify a Pod to run this command"
   exit 2
 fi
 
-if [ ! -f "${CAPSH_STATIC_BIN}" ]; then
-  fetch_capsh
-fi
-
-if [ ! -x "${CAPSH_STATIC_BIN}" ]; then
-  echo "please fix the permissions of ${CAPSH_STATIC_BIN}"
-  exit 2
-fi
-
-if kubectl cp ${CAPSH_STATIC_BIN} "${POD}":/tmp/${CAPSH_STATIC_BIN}; then
+if kubectl cp "${CAPSH_DIR}"/"${CAPSH_STATIC_BIN}" "${POD}":/tmp/${CAPSH_STATIC_BIN}; then
   kubectl exec "${POD}" -- /tmp/${CAPSH_STATIC_BIN} --print
   kubectl exec "${POD}" -- rm /tmp/${CAPSH_STATIC_BIN}
 else
