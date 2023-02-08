@@ -30,5 +30,3 @@ spec:
       to: .
     - from: LICENSE
       to: .
-    - from: bin/libcap2-2.25-capsh-STATIC
-      to: .
